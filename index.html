@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="https://i.ibb.co/DgrtGnV/DG-LOGO1.png" type="image/png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://picsum.photos/2000/1000');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+  
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.411); 
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+           
+        }
+        #score {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            
+            border: none;
+            border-radius: 5px;
+            background-color: #17ff1e;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            
+            background-color: #3a813e;
+        }
+        button:active{
+            background-color: rgb(21, 68, 37);
+        }
+     
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz Application</h1>
+        <button id="play-button">Play Quiz</button>
+        <button id="play-again-button" style="display: none;">Play Again</button>
+        <p id="score">Score: 0</p>
+    </div>
+    
+    <script>
+        let score = 0;
+        let currentQuestionIndex = 0;
+        let questions = [
+            { 
+                question: "Which is the largest city of Pakistan?",
+                answer: "Karachi" 
+            },
+            { 
+                question: "Who is the founder of Pakistan?", 
+              
+                answer: "Quaid-e-Azam" 
+            },
+            { 
+                question: "Which tag is used to define an unordered list in HTML?", 
+                 
+                answer: "<ul>" 
+            },
+            { 
+                question: "What is  HTML element for inserting a line break?", 
+              
+                answer: "<br>" 
+            },
+            { 
+                question: "What does the <a> tag define in HTML?", 
+              
+                answer: "Anchor" 
+            },
+            { 
+                question: "Which attribute is used to specify the URL of an external script file in HTML?", 
+            
+                answer: "src" 
+            },
+            { 
+                question: "Which HTML element is used to define the largest heading?", 
+              
+                answer: "<h1>" 
+            },
+            { 
+                question: "What does the CSS property color define?", 
+               
+                answer: "Text color" 
+            },
+            { 
+                question: "Which of the following CSS properties is used to change the background color of an element?", 
+               
+                answer: "background-color" 
+            },
+            { 
+                question: "What does the CSS property style do?", 
+                
+                answer: "add styling" 
+            },
+            { 
+                question: "Which of the following is a correct way to define a JavaScript function?", 
+               
+                answer: "function myFunction() {}" 
+            },
+            { 
+                question: "What is the correct syntax to create a JavaScript variable?", 
+             
+                answer: "var x = 10;" 
+            },
+            { 
+                question: "What is the largest city in the world?", 
+              
+                answer: "Tokyo" 
+            },
+            { 
+                question: "Who was the first man to walk on the moon?", 
+              
+                answer: "Neil Armstrong" 
+            },
+            { 
+                question: "Which JavaScript event is triggered when the user clicks on an HTML element?", 
+              
+                answer: "onclick" 
+            }
+        ];
+
+        document.getElementById("play-button").addEventListener("click", startQuiz);
+        document.getElementById("play-again-button").addEventListener("click", startQuiz);
+
+        function askQuestion(questionObj) {
+            
+
+            let answer = prompt(questionObj.question);
+
+            if (answer === null) {
+                alert("Quiz canceled. You can start again!");
+                resetQuiz(); 
+                return false; 
+            }
+            if (answer.trim().toLowerCase() === questionObj.answer.toLowerCase()) {
+                score++;
+                alert("Correct!");
+            } else {
+                alert(`Incorrect. The correct answer is ${questionObj.answer}.`);
+            }
+            return true; 
+        }
+
+        function startQuiz() {
+            score = 0;
+            currentQuestionIndex = 0;
+            document.getElementById("score").textContent = `Score: 0`;
+
+            
+            document.getElementById("play-button").style.display = "none";
+            document.getElementById("play-again-button").style.display = "inline-block";
+
+           
+            for (let i = currentQuestionIndex; i < questions.length; i++) {
+                if (!askQuestion(questions[i])) {
+                    break; 
+                }
+                currentQuestionIndex++;
+            }
+            let submit = confirm(`You have completed the quiz! Your final score is ${score} out of ${questions.length}. Do you want to submit the quiz?`);
+            if (submit) {
+                alert("Quiz submitted. Thank you for playing!");
+            } else {
+                alert("Quiz not submitted. You can play again.");
+            }
+
+            document.getElementById("score").innerHTML = `Score: ${score} out of ${questions.length}`;
+            document.getElementById("play-again-button").style.display = "inline-block";
+        }
+
+        function resetQuiz() {
+            
+            document.getElementById("score").innerHTML = `Score: 0`;
+            document.getElementById("play-button").style.display = "none";
+            document.getElementById("play-again-button").style.display = "inline-block";
+            currentQuestionIndex = 0; 
+        }
+    </script>
+</body>
+</html>
